@@ -1,6 +1,6 @@
 "use client";
 
-import { 
+import {
   Pagination,
   PaginationContent,
   PaginationItem,
@@ -22,10 +22,10 @@ export function PaginationComponent({ pagination, basePath }: PaginationComponen
       <PaginationContent>
         {/* 💡 課題: 前のページボタンを実装してください */}
         {/* - hasPrev が true の時のみ表示 */}
-        
+
         {/* 💡 課題: ページ番号のリンクを実装してください */}
         {/* - 現在のページをハイライト */}
-        
+
         {/* 💡 課題: 次のページボタンを実装してください */}
         {/* - hasNext が true の時のみ表示 */}
       </PaginationContent>
