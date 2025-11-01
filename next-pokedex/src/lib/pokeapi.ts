@@ -1,4 +1,4 @@
-import { Name, PaginationInfo, Pokemon, PokemonListResponse, ProcessedPokemon } from "./types";
+import { Name, PaginationInfo, Pokemon, PokemonListResponse, ProcessedAbility, ProcessedPokemon } from "./types";
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 const SAFE_POKEMON_LIMIT = 1010;
@@ -49,7 +49,7 @@ export async function fetchPokemon(idOrName: string | number): Promise<Pokemon> 
     moves: data.moves,
     species: data.species,
     stats: data.stats,
-    types: data.types
+    types: data.types,
   };
 }
 
@@ -125,19 +125,19 @@ export async function getProcessedPokemonList(
 
       //日本語名を取得
       const resSpecies = await fetch(pokemon.species.url);
-      const dataSpecies = await resSpecies.json();
-      const japaneseName = getJapaneseName(dataSpecies.names);
+      const speciesData = await resSpecies.json();
+      const japaneseName = getJapaneseName(speciesData.names);
 
       const processed: ProcessedPokemon = {
         id: pokemon.id,
         name: pokemon.name,
         japaneseName: japaneseName,
         imageUrl: getPokemonImageUrl(pokemon.sprites),
-        types: pokemon.types.map((t) => typeTranslations[t.type.name] ?? t.type.name),
-        height: pokemon.height,
-        weight: pokemon.weight,
-        genus: dataSpecies.genus,
-        abilities:dataSpecies.abilities
+        types: pokemon.types.map(t => t.type.name),
+        height: 0,
+        weight: 0,
+        genus: "",
+        abilities: []
       }
       return processed;
     })
@@ -155,4 +155,55 @@ export async function getProcessedPokemonList(
     pokemon: pokemonDetail,
     pagination
   }
+}
+
+/**
+ * ポケモン単体を処理済みデータとして取得する
+ */
+export async function getProcessedPokemon(id: number): Promise<ProcessedPokemon> {
+  const pokemon = await fetchPokemon(id);
+  const resSpecies = await fetch(pokemon.species.url);
+  const speciesData = await resSpecies.json();
+
+  //日本語名を取得する
+  const japaneseName = getJapaneseName(speciesData.names);
+
+  //日本語で分類を取得する
+  const genus =
+    speciesData.genera.find((g: any) => g.language.name === 'ja-Hrkt')?.genus ??
+    speciesData.genera.find((g: any) => g.language.name === 'ja')?.genus ??
+    '';
+
+  //日本語で特性を取得する
+  const abilities: ProcessedAbility[] = await Promise.all(
+    pokemon.abilities.map(async (a) => {
+      const resAbilities = await fetch(a.ability.url);
+      const abilitiesData = await resAbilities.json();
+
+      const japaneseName = getJapaneseName(abilitiesData.names);
+      const japaneseEffect =
+        abilitiesData.effect_entries.find((e: any) => e.language.name === 'ja-Hrkt')?.effect ??
+        abilitiesData.effect_entries.find((e: any) => e.language.name === 'ja')?.effect ??
+        '';
+
+      return {
+        name: abilitiesData.name,
+        japaneseName,
+        description: japaneseEffect,
+        isHidden: a.is_hidden,
+      };
+    })
+  );
+
+  return {
+    id: pokemon.id,
+    name: pokemon.name,
+    japaneseName: japaneseName,
+    imageUrl: getPokemonImageUrl(pokemon.sprites),
+    types: pokemon.types.map(t => t.type.name),
+    height: pokemon.height,
+    weight: pokemon.weight,
+    genus,
+    abilities
+  };
 }

@@ -1,5 +1,6 @@
 import { Loading } from '@/components/loading';
 import { Suspense } from 'react';
+import { getProcessedPokemon } from '@/lib/pokeapi';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -24,11 +25,19 @@ async function PokemonDetailContent({ id }: { id: number }) {
   // 💡 課題: 基本情報（名前、画像、タイプ、高さ、重さ）を表示
   return (
     <div>
-      <h1>{pokemon.name}</h1>
-      <img src={pokemon.sprites} alt={pokemon.name} />
+      <h1>{pokemon.japaneseName}</h1>
+      <img src={pokemon.imageUrl} alt={pokemon.name} />
       <p>タイプ：{pokemon.types}</p>
       <p>高さ: {pokemon.height}m / 重さ: {pokemon.weight}kg</p>
+      <p>分類：{pokemon.genus}</p>
+      <h2>特性</h2>
+      <ul className="space-y-2">
+        {pokemon.abilities.map((a) => (
+          <p>{a.japaneseName}</p>
+        ))}
+      </ul>
     </div>
+
   );
   // 💡 課題: 前後のポケモンへのナビゲーションボタン
   // 💡 課題: エラーハンドリング

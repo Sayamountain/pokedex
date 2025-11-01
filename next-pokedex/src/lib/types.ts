@@ -18,11 +18,6 @@ export interface PokemonListResponse {
   results: NamedApiResource[];
 }
 
-// 💡 課題: 以下の型も定義してください
-// - Pokemon（ポケモンの基本情報）
-// - PokemonType（タイプ情報）
-// - PokemonSprites（画像情報）
-// - PokemonSpeciesDetail（種別詳細情報）
 // Pokemon API related types
 
 export interface PokemonListItem {
@@ -190,14 +185,6 @@ export interface PokemonSpeciesDetail {
   varieties: Variety[];
 }
 
-export interface Name {
-  name: string;
-  language: {
-    name: string;
-    url: string;
-  };
-}
-
 export interface FlavorTextEntry {
   flavor_text: string;
   language: {
@@ -213,6 +200,7 @@ export interface FlavorTextEntry {
 export interface Genus {
   genus: string;
   language: {
+    genus: string;
     name: string;
     url: string;
   };

@@ -1,4 +1,6 @@
 import { Loading } from '@/components/loading';
+import { PaginationComponent } from '@/components/pagination';
+import { PokemonCard } from '@/components/pokemon-card';
 import { getProcessedPokemonList } from '@/lib/pokeapi';
 import { Suspense } from 'react';
 
@@ -30,16 +32,16 @@ async function PokemonListContent({ page }: { page: number }) {
   const { pokemon, pagination } = await getProcessedPokemonList(page, 20);
   // 💡 課題: PokemonCardコンポーネントでグリッド表示
   return (
-    <><ul>
-      {pokemon.map(p => (
-        <><li key={p.id}>{p.id}</li>
-          <li key={p.japaneseName}>{p.japaneseName}</li>
-          <img src={p.imageUrl} alt={p.name} />
-        </>
+    <div>
+    <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
+      {pokemon.map((p) => (
+        <li key={p.id}>
+          <PokemonCard pokemon={p} />
+        </li>
       ))}
-    </ul></>
-  )
-  // return(
-  // )
-  // 💡 課題: PaginationComponentでページング
+    </ul>
+     {/* 💡 課題: PaginationComponentでページング */}
+  <PaginationComponent pagination={pagination} basePath='/pokemon' />
+  </div>
+);
 }
