@@ -33,15 +33,15 @@ async function PokemonListContent({ page }: { page: number }) {
   // 💡 課題: PokemonCardコンポーネントでグリッド表示
   return (
     <div>
-    <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
-      {pokemon.map((p) => (
-        <li key={p.id}>
-          <PokemonCard pokemon={p} />
-        </li>
-      ))}
-    </ul>
-     {/* 💡 課題: PaginationComponentでページング */}
-  <PaginationComponent pagination={pagination} basePath='/pokemon' />
-  </div>
-);
+      <ul className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6'>
+        {pokemon.map((p) => (
+          <li key={p.id}>
+            <PokemonCard pokemon={p} />
+          </li>
+        ))}
+      </ul>
+      {/* 💡 課題: PaginationComponentでページング */}
+      <PaginationComponent pagination={pagination} basePath='/pokemon' />
+    </div>
+  );
 }
