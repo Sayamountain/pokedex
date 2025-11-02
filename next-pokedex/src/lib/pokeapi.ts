@@ -172,7 +172,7 @@ export async function getProcessedPokemon(id: number): Promise<ProcessedPokemon>
   const genus =
     speciesData.genera.find((g: any) => g.language.name === 'ja-Hrkt')?.genus ??
     speciesData.genera.find((g: any) => g.language.name === 'ja')?.genus ??
-    '';
+    '分類なし';
 
   //日本語で特性を取得する
   const abilities: ProcessedAbility[] = await Promise.all(
@@ -184,7 +184,7 @@ export async function getProcessedPokemon(id: number): Promise<ProcessedPokemon>
       const japaneseEffect =
         abilitiesData.effect_entries.find((e: any) => e.language.name === 'ja-Hrkt')?.effect ??
         abilitiesData.effect_entries.find((e: any) => e.language.name === 'ja')?.effect ??
-        '';
+        '説明なし';
 
       return {
         name: abilitiesData.name,
