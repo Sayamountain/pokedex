@@ -18,18 +18,18 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
   return (
     <Link href={`/pokemon/${pokemon.id}`}>
       <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full">
-        <CardContent className="p-4">
+        <CardContent className="p-3">
           <div className="text-center">
             {/* 💡 課題: ポケモン画像を表示してください */}
             {/* - Imageコンポーネントを使用 */}
             {/* - pokemon.imageUrl を src に設定 */}
             {/* - レスポンシブ対応 */}
-            <div className="relative w-32 h-32 mb-3">
+            <div className="relative mx-auto w-30 h-30 mb-2">
               <Image
                 src={pokemon.imageUrl}
                 alt={pokemon.japaneseName}
                 sizes='(max-width: 768px) 100vw, 50vw'
-                className="object-cover"
+                className='object-cover'
                 fill
               />
             </div>
