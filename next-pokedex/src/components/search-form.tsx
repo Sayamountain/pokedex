@@ -20,13 +20,14 @@ export function SearchForm({ initialQuery = '' }: SearchFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex gap-2">
+    <form onSubmit={handleSubmit} className="flex justify-center gap-2">
       {/* 💡 課題: 検索用のInputとButtonを配置 */}
       <Input
         type='text'
         placeholder='ポケモンの名前を入力'
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        className="w-full max-w-md"
       />
 
       <Button type='submit'>

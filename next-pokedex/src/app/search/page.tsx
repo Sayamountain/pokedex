@@ -10,13 +10,14 @@ interface SearchParams {
 }
 
 interface Props {
-  searchParams: Promise<SearchParams>;
+  searchParams: SearchParams;
 }
 
 // 検索結果を表示する
 export async function SearchResults({ query }: { query: string }) {
   //全ポケモン取得
-  const allPokemon = await getProcessedPokemonList(1,200);
+  const allPokemon = await getProcessedPokemonList(1, 100);
+
   const filtered = allPokemon.pokemon.filter(p =>
     p.japaneseName.toLowerCase().includes(query.toLowerCase())
   );

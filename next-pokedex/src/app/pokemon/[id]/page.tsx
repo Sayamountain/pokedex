@@ -47,7 +47,7 @@ async function PokemonDetailContent({ id }: { id: number }) {
             </div>
             <CardTitle className='text-2xl'>{pokemon.japaneseName}</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className='space-y-3'>
             <img className='mx-auto' src={pokemon.imageUrl} alt={pokemon.name} />
             <h2 className='text-lg'>基本情報</h2>
             <p>高さ: {pokemon.height}m</p>
@@ -62,13 +62,17 @@ async function PokemonDetailContent({ id }: { id: number }) {
             ))}
             </ul>
             <p>特性</p>
-            <ul>
+            <ul className='space-y-2'>
               {pokemon.abilities.map((a) => (
-                <p key={a.japaneseName}>{a.japaneseName}</p>
+                <li key={a.name}>
+                  <p>{a.japaneseName}</p>
+                  <p>{a.description}</p>
+                </li>
               ))}
             </ul>
           </CardContent>
-          <CardFooter>
+
+          <CardFooter className='justify-between'>
             {/* 💡 課題: 前後のポケモンへのナビゲーションボタン */}
             {prevId && (
               <Link href={`/pokemon/${prevId}`}>
@@ -86,9 +90,11 @@ async function PokemonDetailContent({ id }: { id: number }) {
       </Card>
 
         {/* 一覧に戻るボタン */}
-        <Button variant='secondary' >
-          <Link href='/pokemon'> 一覧へ</Link>
-        </Button></>
+        <Link href="/pokemon">
+          <Button variant="secondary" className="fixed bottom-7 right-7">
+            一覧へ
+          </Button>
+        </Link></>
 
     );
     // 💡 課題: エラーハンドリング

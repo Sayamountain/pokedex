@@ -41,6 +41,7 @@ async function PokemonListContent({ page }: { page: number }) {
         ))}
       </ul>
       {/* 💡 課題: PaginationComponentでページング */}
+      <div className='h-7' />
       <PaginationComponent pagination={pagination} basePath='/pokemon' />
     </div>
   );

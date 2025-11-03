@@ -28,9 +28,9 @@ export function Header() {
               <Link
                 key={item.href}
                 href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === item.href
-                  ? 'bg-blue-100 text-blue-600'
-                  : 'text-gray-600 hover:text-blue-600'
+                className={`px-3 py-2 font-medium ${pathname === item.href
+                  ? 'text-blue-600'
+                  : 'text-gray-600'
                   }`}
               >
                 {item.label}
