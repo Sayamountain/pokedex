@@ -23,6 +23,20 @@ export function Header() {
           {/* 💡 課題: ナビゲーションメニューを実装してください */}
           {/* - デスクトップ用とモバイル用の両方 */}
           {/* - 現在のページをハイライト */}
+          <nav>
+            {navigationItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-3 py-2 rounded-md text-sm font-medium ${pathname === item.href
+                  ? 'bg-blue-100 text-blue-600'
+                  : 'text-gray-600 hover:text-blue-600'
+                  }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
         </div>
       </div>
     </header>

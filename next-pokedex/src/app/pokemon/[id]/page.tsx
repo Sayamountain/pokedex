@@ -52,18 +52,18 @@ async function PokemonDetailContent({ id }: { id: number }) {
         <p>特性</p>
         <ul className="space-y-2">
           {pokemon.abilities.map((a) => (
-            <p>{a.japaneseName}</p>
+            <p key={a.japaneseName}>{a.japaneseName}</p>
           ))}
         </ul>
 
         {/* 💡 課題: 前後のポケモンへのナビゲーションボタン */}
         <div>
           {prevId && (
-            <Link href={`/pokemon/${prevId}`}>← 前へ</Link>
+            <Link href={`/pokemon/${prevId}`}>←前へ</Link>
           )}
 
           {nextId && (
-            <Link href={`/pokemon/${nextId}`}>次へ →</Link>
+            <Link href={`/pokemon/${nextId}`}>次へ→</Link>
           )}
         </div>
       </div>

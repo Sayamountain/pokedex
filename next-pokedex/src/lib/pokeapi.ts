@@ -1,4 +1,4 @@
-import { Name, PaginationInfo, Pokemon, PokemonListResponse, ProcessedAbility, ProcessedPokemon } from "./types";
+import { Genus, Name, PaginationInfo, Pokemon, PokemonListResponse, ProcessedAbility, ProcessedPokemon } from "./types";
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 const SAFE_POKEMON_LIMIT = 1010;
@@ -66,6 +66,16 @@ export function getJapaneseName(names: Name[]): string {
 }
 
 /**
+ * 日本語の分類を取得する
+ */
+export function getJapaneseGenus(genera: Genus[]): string {
+  return (
+    genera.find((g: any) => g.language.name === 'ja-Hrkt')?.genus ??
+    genera.find((g: any) => g.language.name === 'ja')?.genus ??
+    '分類なし'
+  )
+}
+/**
  * ポケモンの画像URLを取得する
  */
 export function getPokemonImageUrl(sprites: Pokemon['sprites']): string {
@@ -127,6 +137,7 @@ export async function getProcessedPokemonList(
       const resSpecies = await fetch(pokemon.species.url);
       const speciesData = await resSpecies.json();
       const japaneseName = getJapaneseName(speciesData.names);
+      const japaneseGenus = getJapaneseGenus(speciesData.genera);
 
       const processed: ProcessedPokemon = {
         id: pokemon.id,
@@ -134,9 +145,9 @@ export async function getProcessedPokemonList(
         japaneseName: japaneseName,
         imageUrl: getPokemonImageUrl(pokemon.sprites),
         types: pokemon.types.map(t => t.type.name),
-        height: 0,
-        weight: 0,
-        genus: "",
+        height: pokemon.height,
+        weight: pokemon.weight,
+        genus: japaneseGenus,
         abilities: []
       }
       return processed;
@@ -169,10 +180,7 @@ export async function getProcessedPokemon(id: number): Promise<ProcessedPokemon>
   const japaneseName = getJapaneseName(speciesData.names);
 
   //日本語で分類を取得する
-  const genus =
-    speciesData.genera.find((g: any) => g.language.name === 'ja-Hrkt')?.genus ??
-    speciesData.genera.find((g: any) => g.language.name === 'ja')?.genus ??
-    '分類なし';
+  const japaneseGenus = getJapaneseGenus(speciesData.genera);
 
   //日本語で特性を取得する
   const abilities: ProcessedAbility[] = await Promise.all(
@@ -203,7 +211,7 @@ export async function getProcessedPokemon(id: number): Promise<ProcessedPokemon>
     types: pokemon.types.map(t => t.type.name),
     height: pokemon.height,
     weight: pokemon.weight,
-    genus,
+    genus: japaneseGenus,
     abilities
   };
 }
