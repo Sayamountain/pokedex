@@ -71,7 +71,7 @@ async function PokemonDetailContent({ id }: { id: number }) {
               ))}
             </ul>
           </CardContent>
-
+          <div className="h-12" />
           <CardFooter className='justify-between'>
             {/* 💡 課題: 前後のポケモンへのナビゲーションボタン */}
             {prevId && (
