@@ -80,11 +80,12 @@ export function getJapaneseName(names: Name[]): string {
  */
 export function getJapaneseGenus(genera: Genus[]): string {
   return (
-    genera.find((g: any) => g.language.name === 'ja-Hrkt')?.genus ??
-    genera.find((g: any) => g.language.name === 'ja')?.genus ??
+    genera.find((g) => g.language.name === 'ja-Hrkt')?.genus ??
+    genera.find((g) => g.language.name === 'ja')?.genus ??
     '分類なし'
   )
 }
+
 /**
  * ポケモンの画像URLを取得する
  */

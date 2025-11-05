@@ -261,18 +261,18 @@ export interface ProcessedAbility {
 }
 
 // 進化系統図
-export interface EvolutionChain {
-  id: number;
-  chain: ChainLink;
-}
+// export interface EvolutionChain {
+//   id: number;
+//   chain: ChainLink;
+// }
 
-export interface ChainLink {
-  evolution_details: EvolutionDetail;
-}
+// export interface ChainLink {
+//   evolution_details: EvolutionDetail;
+// }
 
-export interface EvolutionDetail {
+// export interface EvolutionDetail {
 
-}
+// }
 
 // アプリ内で使用する処理済みポケモンデータ
 export interface ProcessedPokemon {
