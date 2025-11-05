@@ -201,8 +201,8 @@ export async function getProcessedPokemon(id: number): Promise<ProcessedPokemon>
 
       const japaneseName = getJapaneseName(abilitiesData.names);
       const japaneseEffect =
-        abilitiesData.effect_entries.find((e: any) => e.language.name === 'ja-Hrkt')?.effect ??
-        abilitiesData.effect_entries.find((e: any) => e.language.name === 'ja')?.effect ??
+        abilitiesData.effect_entries.find((e: { language: { name: string; }; }) => e.language.name === 'ja-Hrkt')?.effect ??
+        abilitiesData.effect_entries.find((e: { language: { name: string; }; }) => e.language.name === 'ja')?.effect ??
         '説明なし';
 
       return {
