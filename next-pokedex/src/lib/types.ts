@@ -260,6 +260,20 @@ export interface ProcessedAbility {
   isHidden: boolean;
 }
 
+// 進化系統図
+export interface EvolutionChain {
+  id: number;
+  chain: ChainLink;
+}
+
+export interface ChainLink {
+  evolution_details: EvolutionDetail;
+}
+
+export interface EvolutionDetail {
+
+}
+
 // アプリ内で使用する処理済みポケモンデータ
 export interface ProcessedPokemon {
   id: number;
