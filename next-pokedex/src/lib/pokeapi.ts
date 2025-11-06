@@ -53,7 +53,6 @@ export async function fetchPokemon(idOrName: string | number): Promise<Pokemon> 
   };
 }
 
-
 // /**
 //  * ポケモンの進化情報を取得する
 //  */
@@ -61,7 +60,6 @@ export async function fetchPokemon(idOrName: string | number): Promise<Pokemon> 
 //   const res = await fetch(`${BASE_URL}/pokemon-species/${id}`);
 //   const data = await res.json();
 // }
-
 
 /**
  * 多言語名前配列から日本語名を取得する
