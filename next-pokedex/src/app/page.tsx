@@ -9,13 +9,13 @@ export default function Home() {
         <h1 className="text-3xl font-bold text-center mb-8">ポケモン図鑑</h1>
         <Card className='h-full mx-auto mb-10'>
           <CardHeader>
-            <CardTitle className="text-lg">ポケモン一覧</CardTitle>
-            <CardDescription>
+            <CardTitle className='text-2xl'>ポケモン一覧</CardTitle>
+            <CardDescription className="text-lg">
               ポケモンを一覧で表示します。
             </CardDescription>
             <CardAction>
-              <Button variant='secondary'>
-                <Link href='/pokemon'>一覧を見る</Link>
+              <Button>
+                <Link className="text-lg" href='/pokemon'>一覧を見る</Link>
               </Button>
             </CardAction>
           </CardHeader>
@@ -23,13 +23,13 @@ export default function Home() {
 
         <Card className='h-full mx-auto'>
           <CardHeader>
-            <CardTitle className="text-lg">ポケモン検索</CardTitle>
-            <CardDescription>
+            <CardTitle className='text-2xl'>ポケモン検索</CardTitle>
+            <CardDescription className="text-lg">
               名前でポケモンを検索できます。
             </CardDescription>
             <CardAction>
-              <Button variant='secondary'>
-                <Link href='/search'>検索する</Link>
+              <Button>
+                <Link className="text-lg" href='/search'>検索する</Link>
                 </Button>
             </CardAction>
           </CardHeader>

@@ -1,4 +1,4 @@
-import { Genus, Name, PaginationInfo, Pokemon, PokemonListResponse, ProcessedAbility, ProcessedPokemon } from "./types";
+import { ChainLink, EvolutionChain, Genus, Name, PaginationInfo, Pokemon, PokemonListResponse, ProcessedAbility, ProcessedEvolutionDetail, ProcessedPokemon } from "./types";
 
 const BASE_URL = 'https://pokeapi.co/api/v2';
 const SAFE_POKEMON_LIMIT = 1010;
@@ -52,14 +52,6 @@ export async function fetchPokemon(idOrName: string | number): Promise<Pokemon> 
     types: data.types,
   };
 }
-
-// /**
-//  * ポケモンの進化情報を取得する
-//  */
-// export async function fetchEvolutionChain(id: number): Promise<Pokemon> {
-//   const res = await fetch(`${BASE_URL}/pokemon-species/${id}`);
-//   const data = await res.json();
-// }
 
 /**
  * 多言語名前配列から日本語名を取得する
@@ -223,4 +215,80 @@ export async function getProcessedPokemon(id: number): Promise<ProcessedPokemon>
     genus: japaneseGenus,
     abilities
   };
+}
+
+/**
+ * 進化トリガーの日本語変換テーブル
+ */
+export const evolutionTriggerTranslations: Record<string, string> = {
+  'level-up': 'レベルアップ',
+  'trade': '交換',
+  'use-item': 'アイテム使用',
+  'shed': '空きがある',
+  'spin': 'スピン',
+  'tower-of-darkness': 'あくの塔',
+  'tower-of-waters': '水の塔',
+  'three-critical-hits': '3回急所に当てる',
+  'take-damage': 'ダメージを受ける',
+  'other': 'その他'
+};
+
+/**
+ * 進化チェーンを取得する
+ */
+export async function fetchEvolutionChain(id: number): Promise<EvolutionChain> {
+  const resSpecies = await fetch(`${BASE_URL}/pokemon-species/${id}`);
+  const speciesData = await resSpecies.json();
+
+  const evoRes = await fetch(speciesData.evolution_chain.url);
+  const evoData = await evoRes.json();
+
+  return {
+    id: evoData.id,
+    chain: evoData.chain
+  };
+}
+
+/**
+ * 進化チェーンを処理する
+ */
+export async function processedChainLink(chainLink: ChainLink): Promise<ProcessedEvolutionDetail> {
+  //ID抽出
+  const id = Number(chainLink.species.url.split('/').filter(Boolean).pop());
+
+  const resSpecies = await fetch(chainLink.species.url);
+  const speciesData = await resSpecies.json();
+  const japaneseName = getJapaneseName(speciesData.names);
+
+  const pokemon = await fetchPokemon(id);
+  const imageUrl = getPokemonImageUrl(pokemon.sprites);
+
+  // 進化条件
+  const firstDetail = chainLink.evolution_details?.[0];
+  //日本語に変換
+  const trigger = evolutionTriggerTranslations[firstDetail?.trigger?.name ?? ''] ?? '不明';
+  const minLevel = firstDetail?.min_level ?? null;
+
+  //次の進化を再帰処理
+  const evolvesTo = await Promise.all(
+    chainLink.evolves_to.map(evo => processedChainLink(evo))
+  );
+
+  return {
+    id,
+    name: chainLink.species.name,
+    japaneseName,
+    imageUrl,
+    trigger,
+    minLevel,
+    evolvesTo
+  };
+}
+
+/**
+ * 進化チェーンを処理済みデータとして取得する
+ */
+export async function getProcessedEvolutionChain(id: number): Promise<ProcessedEvolutionDetail> {
+  const evoChain = await fetchEvolutionChain(id);
+  return processedChainLink(evoChain.chain);
 }

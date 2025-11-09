@@ -1,6 +1,6 @@
 import { getProcessedPokemonList } from "@/lib/pokeapi";
 import { PokemonCard } from "./pokemon-card";
-import { ProcessedPokemon, PaginationInfo } from "@/lib/types";
+import { ProcessedPokemon } from "@/lib/types";
 
 interface Props {
   query: string;

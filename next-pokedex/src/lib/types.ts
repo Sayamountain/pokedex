@@ -260,20 +260,6 @@ export interface ProcessedAbility {
   isHidden: boolean;
 }
 
-// 進化系統図
-// export interface EvolutionChain {
-//   id: number;
-//   chain: ChainLink;
-// }
-
-// export interface ChainLink {
-//   evolution_details: EvolutionDetail;
-// }
-
-// export interface EvolutionDetail {
-
-// }
-
 // アプリ内で使用する処理済みポケモンデータ
 export interface ProcessedPokemon {
   id: number;
@@ -294,4 +280,49 @@ export interface PaginationInfo {
   hasNext: boolean;
   hasPrev: boolean;
   totalCount: number;
+}
+
+
+// 進化チェーン
+export interface EvolutionChain {
+  id: number;
+  chain: ChainLink;
+}
+
+export interface ChainLink {
+  species: NamedApiResource;
+  evolves_to: ChainLink[];
+  evolution_details: EvolutionDetail[];
+  is_baby: boolean;
+}
+
+export interface EvolutionDetail {
+  gender: number | null;
+  held_item: NamedApiResource | null;
+  item: NamedApiResource | null;
+  known_move: NamedApiResource | null;
+  known_move_type: NamedApiResource | null;
+  location: NamedApiResource | null;
+  min_affection: number | null;
+  min_beauty: number | null;
+  min_happiness: number | null;
+  min_level: number | null;
+  needs_overworld_rain: boolean;
+  party_species: NamedApiResource | null;
+  party_type: NamedApiResource | null;
+  relative_physical_stats: number | null;
+  time_of_day: string;
+  trade_species: NamedApiResource | null;
+  trigger: NamedApiResource | null;
+}
+
+//アプリ内で使用する進化チェーンデータ
+export interface ProcessedEvolutionDetail {
+  id: number;
+  name: string;
+  japaneseName: string;
+  imageUrl: string;
+  trigger: string;
+  minLevel: number | null;
+  evolvesTo: ProcessedEvolutionDetail[];
 }

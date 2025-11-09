@@ -43,33 +43,35 @@ async function PokemonDetailContent({ id }: { id: number }) {
         <div>
           <CardHeader className='text-center'>
             <div>
-              <p>No.{digitsId}</p>
+              <p className='text-lg'>No.{digitsId}</p>
             </div>
-            <CardTitle className='text-2xl'>{pokemon.japaneseName}</CardTitle>
+            <CardTitle className='text-3xl'>{pokemon.japaneseName}</CardTitle>
           </CardHeader>
           <CardContent className='space-y-3'>
             <img className='mx-auto' src={pokemon.imageUrl} alt={pokemon.name} />
-            <h2 className='text-lg'>基本情報</h2>
-            <p>高さ: {pokemon.height}m</p>
-            <p>重さ: {pokemon.weight}kg</p>
-            <p>分類：{pokemon.genus}</p>
-            <ul>タイプ：{pokemon.types.map((type) => (
-              <span
-                key={type}
-              >
+            <h2 className='text-2xl font-bold'>基本情報</h2>
+            <p className='text-lg'>高さ: {pokemon.height}m</p>
+            <p className='text-lg'>重さ: {pokemon.weight}kg</p>
+            <p className='text-lg'>分類：{pokemon.genus}</p>
+            <ul className='text-lg'>タイプ：{pokemon.types.map((type) => (
+              <span key={type}>
                 {typeTranslations[type] ?? type}
               </span>
             ))}
             </ul>
-            <p>特性</p>
+            <p className='text-lg'>特性</p>
             <ul className='space-y-2'>
               {pokemon.abilities.map((a) => (
                 <li key={a.name}>
-                  <p>{a.japaneseName}</p>
-                  <p>{a.description}</p>
+                  <p className='text-base'>{a.japaneseName}</p>
+                  <p className='text-base text-gray-500'>{a.description}</p>
                 </li>
               ))}
             </ul>
+            <p className='text-lg'>進化系統</p>
+            <Link href={`/evolution/${id}`}>
+              <Button variant='outline'>進化系統を見る</Button>
+            </Link>
           </CardContent>
           <div className="h-12" />
           <CardFooter className='justify-between'>
@@ -91,7 +93,7 @@ async function PokemonDetailContent({ id }: { id: number }) {
 
         {/* 一覧に戻るボタン */}
         <Link href="/pokemon">
-          <Button variant="secondary" className="fixed bottom-7 right-7">
+          <Button className="fixed bottom-7 right-7">
             一覧へ
           </Button>
         </Link></>

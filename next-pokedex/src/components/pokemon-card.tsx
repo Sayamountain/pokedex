@@ -35,10 +35,10 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
             </div>
 
             {/* 💡 課題: ポケモン番号を3桁で表示してください（例: No. 001） */}
-            <p>No.{digitsId}</p>
+            <p className='text-sm'>No.{digitsId}</p>
 
             {/* 💡 課題: ポケモンの日本語名を表示してください */}
-            <p>{pokemon.japaneseName}</p>
+            <p className='text-base'>{pokemon.japaneseName}</p>
 
             {/* 💡 課題: タイプをBadgeで表示してください */}
             {/* - pokemon.types をmap()で処理 */}
