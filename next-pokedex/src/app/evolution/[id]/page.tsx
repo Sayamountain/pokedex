@@ -48,7 +48,6 @@ async function EvolutionPageContent({ id }: { id: number }) {
                         一覧へ
                     </Button>
                 </Link></>
-
         );
         //エラーハンドリング
     } catch (error) {
