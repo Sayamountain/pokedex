@@ -8,7 +8,7 @@ interface Props {
 }
 
 //配列を分割する
-export function split(array: string | any[], chunkSize: number) {
+export function split(array: number[], chunkSize: number) {
   if (chunkSize <= 0) throw new Error("chunkSize must be greater than 0");
   const result = [];
   for (let i = 0; i < array.length; i += chunkSize) {
